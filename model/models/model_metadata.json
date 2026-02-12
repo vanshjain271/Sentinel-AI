@@ -1,0 +1,69 @@
+{
+  "created_at": "2026-01-12 07:21:33",
+  "dataset_info": {
+    "total_samples": 24000,
+    "features_count": 31,
+    "malicious_ratio": 0.875,
+    "attack_types": 8
+  },
+  "models_trained": [
+    "RandomForest",
+    "XGBoost",
+    "LSTM",
+    "Autoencoder",
+    "Ensemble"
+  ],
+  "performance_summary": {
+    "accuracy": {
+      "RandomForest": 1.0,
+      "XGBoost": 1.0,
+      "LSTM": 1.0,
+      "Autoencoder": 0.99375,
+      "Ensemble": 1.0
+    },
+    "f1": {
+      "RandomForest": 1.0,
+      "XGBoost": 1.0,
+      "LSTM": 1.0,
+      "Autoencoder": 0.99644128113879,
+      "Ensemble": 1.0
+    },
+    "roc_auc": {
+      "RandomForest": 1.0,
+      "XGBoost": 1.0,
+      "LSTM": 1.0,
+      "Autoencoder": 0.975,
+      "Ensemble": 1.0
+    }
+  },
+  "feature_importance": {
+    "top_5_features": [
+      {
+        "feature": "concurrent_connections",
+        "importance": 0.2290261225563683
+      },
+      {
+        "feature": "failed_connections",
+        "importance": 0.1830534195858699
+      },
+      {
+        "feature": "is_malicious",
+        "importance": 0.1309920415800862
+      },
+      {
+        "feature": "retransmission_rate",
+        "importance": 0.121626763594742
+      },
+      {
+        "feature": "connection_success_rate",
+        "importance": 0.0907331365416718
+      }
+    ]
+  },
+  "usage_instructions": {
+    "scaler": "5g_ddos_scaler.pkl",
+    "feature_names": "5g_feature_names.pkl",
+    "ensemble_model": "models/ensemble_voting_elite.pkl",
+    "anomaly_detector": "models/autoencoder_elite.keras"
+  }
+}
