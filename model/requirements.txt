@@ -1,79 +1,22 @@
-# Sentinel-AI - Python Dependencies
-# Updated with exact working versions as of 2024
-# Generated based on tested and verified package versions
+flask
+flask-cors
+requests
 
-# Core Web Framework
-Flask==3.1.1
-Flask-CORS==6.0.1
+numpy
+pandas
+scikit-learn
+xgboost
+lightgbm
+tensorflow==2.16.1
 
-# Network Packet Analysis
-scapy==2.6.1
-pyshark==0.6
+scapy
+pyshark
+psutil
 
-# HTTP Requests
-requests==2.32.3
+matplotlib
+seaborn
 
-# Machine Learning - TensorFlow Stack (CPU version for Windows)
-tensorflow-cpu==2.13.0
-keras==2.13.1
+ujson
+joblib
 
-# Machine Learning - Scikit-learn Ensemble
-scikit-learn==1.6.1
-xgboost==2.0.3
-lightgbm==4.1.0
-joblib==1.5.3
-
-# Data Processing
-pandas==2.3.3
-numpy==1.26.4
-
-# Deep Learning - PyTorch (for Mininet/GNN support)
-torch==2.8.0
-
-# Performance & System Monitoring
-psutil==7.0.0
-ujson==5.10.0
-
-# Environment Configuration
-python-dotenv==1.0.0
-
-
-# Explainable AI (XAI)
-lime==0.2.0.1
-shap==0.45.0
-
-# 5G Core Integration (Linux-only, may require special installation)
-open5gs-client==0.1.0
-pysctp==0.7
-
-# Outlier Detection
-alibi-detect==0.11.7
-
-# Network Emulation
-networkx==3.5
-matplotlib==3.10.3
-seaborn==0.13.2
-plotly==6.4.0
-
-# Ryu SDN Controller (Linux/WSL only)
-ryu==4.34
-
-# Performance Testing
-locust==2.42.5
-
-# Additional ML Utilities
-scipy==1.15.3
-optuna==4.1.0
-hyperopt==0.2.7
-
-# =============================================================================
-# TRANSITIVE DEPENDENCIES (automatically installed)
-# These are included for reference and reproducibility
-# =============================================================================
-# tensorboard==2.13.0
-# tensorflow-estimator==2.13.0
-# tensorflow-io-gcs-filesystem==0.31.0
-# threadpoolctl==3.6.0
-# scipy==1.15.3
-# sympy==1.14.0
-
+locust

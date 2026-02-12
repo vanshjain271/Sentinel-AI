@@ -345,8 +345,7 @@ def capture_loop():
 
     try:
         sniff(
-            iface="Wi-Fi",
-            filter=f"dst host {LAPTOP_IP}",
+            iface="en0",
             prn=packet_handler,
             store=False,
             stop_filter=lambda x: not running
