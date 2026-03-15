@@ -130,3 +130,30 @@ ENV/
 # System Files
 .DS_Store
 Thumbs.db
+
+# ------------------------------
+# Sentinel-AI Research Files
+# ------------------------------
+
+# Datasets
+datasets/
+*.parquet
+*.csv
+*.zip
+*.tar.gz
+
+# Virtual environments
+venv/
+venv311/
+env/
+ENV/
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Experiment logs
+results/logs/
+
+# System files
+.DS_Store
