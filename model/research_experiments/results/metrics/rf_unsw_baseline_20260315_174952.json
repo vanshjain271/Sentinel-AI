@@ -1,0 +1,10 @@
+{
+    "model": "rf",
+    "dataset": "UNSW-NB15",
+    "experiment": "baseline_training",
+    "accuracy": 0.9427573493742117,
+    "precision": 0.9560282393037551,
+    "recall": 0.9542858878561449,
+    "f1": 0.9551562690015809,
+    "roc_auc": 0.989490334093476
+}

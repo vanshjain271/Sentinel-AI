@@ -1,0 +1,10 @@
+{
+    "model": "xgb",
+    "dataset": "UNSW-NB15",
+    "experiment": "baseline_training",
+    "accuracy": 0.9383137673425828,
+    "precision": 0.9525026624068158,
+    "recall": 0.9508535325921876,
+    "f1": 0.9516773830696034,
+    "roc_auc": 0.9892940490444434
+}
