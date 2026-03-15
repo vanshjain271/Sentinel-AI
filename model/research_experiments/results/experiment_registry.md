@@ -80,14 +80,39 @@ The poor performance of Sentinel models in Experiment 1 was caused by feature do
 
 ---
 
+## Experiment 3 — Sentinel on CIC-DDoS2019
+
+Dataset: CIC-DDoS2019  
+Samples: 800,000 flows (subset)
+
+Models evaluated:
+- Random Forest
+- XGBoost
+- Ensemble Voting
+
+Results:
+
+Accuracy: 0.3609  
+Precision: 0.0000  
+Recall: 0.0000  
+F1-score: 0.0000  
+ROC-AUC: 0.50
+
+Confusion Matrix:
+
+[[93000, 0],
+ [164673, 0]]
+
+Observation:
+
+The model classified all traffic as benign and failed to detect any attack instances.
+
+Conclusion:
+
+Models trained on telecom traffic features fail to generalize to enterprise network traffic due to feature distribution mismatch.
+
+
 # Planned Experiments
-
-## Experiment 3
-Sentinel Models on CIC-DDoS2019 Dataset
-
-Objective:
-Evaluate Sentinel-AI on a modern DDoS dataset.
-
 ---
 
 ## Experiment 4
