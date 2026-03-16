@@ -80,8 +80,149 @@ The system delivers **real-time attack detection**, **5G network slicing support
 │ (Port 6633)     │      │ + Flow Rules      │      │ (Port 5173)      │
 └─────────────────┘      └───────────────────┘      └─────────────────┘
 ```
+🧪 Cross-Domain Research Experiments
 
+To evaluate the robustness of Sentinel-AI beyond telecom networks, a dedicated research pipeline was developed to study cross-domain generalization of intrusion detection models.
+
+The key research question investigated:
+
+Can AI models trained on one network environment detect DDoS attacks in a different network environment?
+
+Different network infrastructures (telecom, enterprise, cloud) expose different traffic features. Sentinel-AI experiments evaluate whether models trained on one domain remain effective in another.
+
+Two public cybersecurity datasets were used for evaluation.
+
+Dataset	Description
+UNSW-NB15	Enterprise intrusion detection dataset
+CIC-DDoS2019	Modern large-scale DDoS attack dataset
+
+Experiments were conducted using both domain-specific features and domain-agnostic universal traffic features.
+
+📊 Experiment Results Summary
+
+| Experiment       | Train Dataset      | Test Dataset | Accuracy | Key                                      |
+| ---------------- | ------------------ | ------------ | -------- | ------------------------------------------------- |
+| **Experiment 1** | Telecom 5G Dataset | UNSW-NB15    | 0.36     | Telecom-trained models fail on enterprise traffic |
+| **Experiment 2** | UNSW-NB15          | UNSW-NB15    | 0.94     | Dataset is learnable with standard ML models      |
+| **Experiment 3** | Telecom 5G Dataset | CIC-DDoS2019 | 0.36     | Telecom models fail on modern DDoS traffic        |
+| **Experiment 4** | UNSW-NB15          | CIC-DDoS2019 | 0.98     | Universal features enable cross-domain detection  |
+| **Experiment 5** | CIC-DDoS2019       | UNSW-NB15    | 0.63     | High attack recall across datasets                |
+
+🔬 Key Research Findings
+
+The experiments reveal several important insights:
+
+1️⃣ Domain-Specific Models Do Not Generalize
+
+Models trained on telecom-specific features (such as 5qi, gNB_id, and pdu_session_id) fail when applied to enterprise network datasets.
+
+This demonstrates that feature domain mismatch significantly reduces IDS effectiveness.
+
+2️⃣ Universal Traffic Features Improve Cross-Domain Detection
+
+To overcome feature mismatch, a universal feature abstraction layer was introduced using domain-agnostic traffic statistics:
+
+protocol
+flow_duration
+packet_mean
+packet_std
+packet_rate
+
+These features exist in most network environments and allow models to detect anomalous traffic patterns independent of infrastructure.
+
+3️⃣ Bidirectional Cross-Dataset Generalization
+
+Experiments 4 and 5 demonstrate that models trained using universal traffic features can detect attacks across different datasets in both directions:
+
+UNSW → CIC detection
+CIC → UNSW detection
+
+This indicates that universal traffic statistics capture fundamental characteristics of DDoS behavior.
+
+🧠 Research Pipeline
+
+A separate experimental framework was implemented inside:
+
+model/research_experiments/
+
+This pipeline supports:
+
+Dataset loading
+
+Feature abstraction
+
+Cross-dataset model evaluation
+
+Automated experiment logging
+
+Metrics and confusion matrix generation
+
+Each experiment is versioned using Git tags for full reproducibility.
+
+Experiment	Git Tag
+Experiment 1	experiment-1-telecom-unsw
+Experiment 2	experiment-2-unsw-baseline
+Experiment 3	experiment-3-cic-ddos
+Experiment 4	experiment-4-universal-features
+Experiment 5	experiment-5-reverse-cross-dataset
+📈 Example Experiment Metrics (Experiment 5)
+
+Reverse cross-dataset evaluation (CIC → UNSW):
+
+Metric	Value
+Accuracy	0.63
+Precision	0.64
+Recall	0.94
+F1 Score	0.76
+
+The model detects 94% of attacks, demonstrating strong recall across different network environments.
 ---
+🧪 Sentinel-AI Research Experiment Pipeline
+To systematically evaluate model generalization across different network environments, Sentinel-AI includes a dedicated experimental framework.
+
+The research pipeline isolates dataset processing, feature abstraction, training, and evaluation into reproducible modules.
+Dataset Loader
+      ↓
+Feature Mapping / Universal Feature Layer
+      ↓
+Model Training (RandomForest / XGBoost)
+      ↓
+Cross-Dataset Evaluation
+      ↓
+Metrics Generation
+      ↓
+Confusion Matrix
+      ↓
+Experiment Registry Logging
+      ↓
+Result Storage
+
+This pipeline enables controlled experimentation for evaluating cross-domain intrusion detection performance
+
+Research Pipeline Components
+| Module             | Purpose                                             |
+| ------------------ | --------------------------------------------------- |
+| datasets           | Dataset loading and preprocessing                   |
+| preprocessing      | Feature mapping and normalization                   |
+| training_baselines | Baseline model training                             |
+| models             | Universal feature models                            |
+| evaluation         | Metrics computation and confusion matrix generation |
+| results            | Stored experiment outputs                           |
+
+Stored Experiment Outputs
+
+Each experiment automatically stores:
+
+Performance metrics (JSON)
+
+Confusion matrices (CSV)
+
+Experiment summary tables
+
+Registry entries documenting experiment parameters
+
+This ensures full reproducibility of results
+
 
 ## 🗂 Repository Structure
 
@@ -89,70 +230,74 @@ The system delivers **real-time attack detection**, **5G network slicing support
 Sentinel-AI/
 │
 ├── frontend/            # React Dashboard (Port 5173)
-│   ├── src/
-│   │   ├── components/  # React Components (Header, Stats, Charts, etc.)
-│   │   ├── services/    # API Service Layer
-│   │   ├── types/       # TypeScript Type Definitions
-│   │   ├── App.tsx      # Main Application
-│   │   └── main.tsx     # Entry Point
-│   └── public/          # Static Assets
 │
 ├── backend/             # Node.js API Server (Port 3000)
-│   ├── controllers/     # Route Controllers
-│   ├── middleware/      # Custom Middleware
-│   ├── routes/          # Express Routes
-│   ├── services/        # Business Logic Services
-│   ├── tests/           # Unit, Integration, Performance Tests
-│   └── utils/           # Utility Functions
 │
 ├── model/               # ML Engine + Flask API (Port 5001)
-│   ├── app/             # Flask Application
-│   │   ├── app.py                   # Main Flask Application
-│   │   ├── explainable_ai.py         # XAI for model predictions
-│   │   ├── feature_extraction.py     # Packet feature extraction
-│   │   ├── fiveg_core_integration.py # 5G Core integration
-│   │   ├── flow_capture.py           # Network flow capture
-│   │   ├── mitigation_engine.py      # Attack mitigation logic
-│   │   ├── ml_detection.py           # ML detection engine
-│   │   ├── nas_analyzer.py           # Neural Architecture Search
-│   │   ├── network_slicing.py        # 5G network slicing
-│   │   ├── online_learning.py        # Online model updates
-│   │   ├── performance_cache.py      # Performance optimization
-│   │   ├── sdn_controller.py         # SDN Ryu controller
-│   │   └── test/                     # Model training & testing
-│   │       ├── compare_models.py     # Model comparison
-│   │       ├── manual_block_test.py  # Manual block tests
-│   │       ├── test_enhanced_model.py
-│   │       ├── test_ryu_connection.py
-│   │       ├── train_model.py        # Model training
-│   │       └── training.py           # Training utilities
-│   ├── models/          # Trained Models (.keras, .pkl, .json)
-│   │   ├── 5g_ddos_dataset.csv       # Training dataset
-│   │   ├── 5g_ddos_scaler.pkl        # Feature scaler
-│   │   ├── 5g_feature_names.pkl      # Feature names
-│   │   ├── autoencoder.keras         # Autoencoder model
-│   │   ├── ensemble_voting.pkl       # Voting ensemble
-│   │   ├── inference.py              # Inference utilities
-│   │   ├── lstm.keras                # LSTM model
-│   │   ├── mininet.py                # Mininet topology
-│   │   ├── model_metadata.json       # Model metadata
-│   │   ├── model_performance_summary.csv
-│   │   ├── random_forest.pkl         # Random Forest model
-│   │   ├── rf_feature_importance.csv
-│   │   ├── shap_values.csv           # SHAP values
-│   │   ├── xgboost.json              # XGBoost model
-│   │   └── xgboost.pkl               # XGBoost model
-│   ├── requirements.txt   # Python Dependencies
-│   ├── setup_windows.bat  # Windows setup script
-│   └── TENSORFLOW_FIX_WINDOWS.md    # TensorFlow Windows fix
+│   │
+│   ├── app/             # Flask ML service
+│   │   ├── app.py
+│   │   ├── feature_extraction.py
+│   │   ├── ml_detection.py
+│   │   ├── mitigation_engine.py
+│   │   ├── explainable_ai.py
+│   │   ├── network_slicing.py
+│   │   ├── online_learning.py
+│   │   └── sdn_controller.py
+│   │
+│   ├── models/          # Trained models
+│   │   ├── random_forest.pkl
+│   │   ├── xgboost.pkl
+│   │   ├── lstm.keras
+│   │   ├── autoencoder.keras
+│   │   ├── ensemble_voting.pkl
+│   │   └── model_metadata.json
+│   │
+│   ├── research_experiments/   # Cross-domain IDS research framework
+│   │   │
+│   │   ├── datasets/           # Dataset loading utilities
+│   │   ├── preprocessing/      # Feature abstraction layer
+│   │   ├── models/             # Experimental models
+│   │   ├── training_baselines/ # Baseline training scripts
+│   │   ├── evaluation/         # Metrics + confusion matrix generation
+│   │   │
+│   │   ├── run_experiment.py
+│   │   ├── run_experiment_4_universal.py
+│   │   ├── run_experiment_5_reverse.py
+│   │   │
+│   │   ├── results/
+│   │   │   ├── metrics/
+│   │   │   ├── confusion_matrices/
+│   │   │   ├── tables/
+│   │   │   └── experiment_registry.md
+│   │   │
+│   │   └── README.md
 │
-├── DDOS/                # Load Testing Scripts (Locust)
-│   └── locustfile.py    # DDoS Simulation Tests
+├── DDOS/                # Locust attack simulation scripts
 │
-├── .gitignore
 ├── README.md
-└── LICENSE
+├── LICENSE
+└── .gitignore
 ```
+📚 Research Contributions
+
+Sentinel-AI contributes to cybersecurity research in several areas:
+
+1️⃣ Cross-Domain Intrusion Detection Evaluation
+
+Demonstrates that intrusion detection models trained on telecom-specific datasets fail to generalize across enterprise and cloud traffic environments.
+
+2️⃣ Universal Traffic Feature Abstraction
+
+Introduces a domain-agnostic feature layer enabling cross-dataset intrusion detection.
+
+3️⃣ AI + SDN Autonomous Defense
+
+Combines machine learning detection with software-defined networking mitigation for real-time automated defense.
+
+4️⃣ Reproducible Experimental Framework
+
+Provides a modular pipeline for evaluating IDS models across heterogeneous datasets.
 
 ---
 
@@ -362,3 +507,12 @@ Refer to the LICENSE file for details.
 - Self-healing mechanisms
 
 Perfect for research, enterprise labs, and advanced cybersecurity projects.
+
+🧑‍💻 Author
+
+Vansh Jain
+Cybersecurity & AI Researcher
+
+Creator and lead developer of Sentinel-AI, an AI-driven DDoS detection and mitigation architecture integrating machine learning, SDN automation, and real-time network analytics.
+
+All intellectual property and implementation of Sentinel-AI are developed and maintained by Vansh Jain.
