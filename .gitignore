@@ -162,3 +162,5 @@ results/logs/
 # Large results
 model/research_experiments/results/confusion_matrices/
 model/research_experiments/results/metrics/
+#models
+model/models/*.pkl
