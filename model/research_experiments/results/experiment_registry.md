@@ -144,10 +144,48 @@ Confusion Matrix:
 Observation:
 Universal traffic features significantly improved cross-domain detection compared to Sentinel telecom-specific features.
 
+
+
+
+# Experiment 5 — Reverse Cross-Dataset Evaluation
+
+## Objective
+Evaluate whether a model trained on CIC-DDoS2019 can detect attacks in the UNSW-NB15 dataset using universal traffic features.
+
+## Setup
+
+Train Dataset:
+CIC-DDoS2019
+
+Test Dataset:
+UNSW-NB15
+
+Model:
+RandomForest
+
+Features:
+protocol
+flow_duration
+packet_mean
+packet_std
+packet_rate
+
+## Results
+
+Accuracy: 0.626
+Precision: 0.641
+Recall: 0.942
+F1 Score: 0.763
+
+## Key Insight
+
+The model detects most attacks (94% recall) but produces false positives due to domain differences between datasets.
+
+This demonstrates partial cross-domain generalization using universal traffic features.
 ---
 # Planned Experiments
 
-## Experiment 5
+## Experiment 6
 Improved Sentinel Architecture
 
 Possible improvements:
