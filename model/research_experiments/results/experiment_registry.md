@@ -112,16 +112,40 @@ Conclusion:
 Models trained on telecom traffic features fail to generalize to enterprise network traffic due to feature distribution mismatch.
 
 
+---
+## Experiment 4 — Universal Feature Model (UNSW → CIC)
+
+Training Dataset: UNSW-NB15  
+Testing Dataset: CIC-DDoS2019
+
+Features:
+protocol
+flow_duration
+packet_mean
+packet_std
+packet_rate
+
+Model:
+RandomForestClassifier
+
+Results:
+
+Accuracy: 0.672  
+Precision: 0.989  
+Recall: 0.673  
+F1 Score: 0.801  
+ROC-AUC: 0.65
+
+Confusion Matrix:
+
+[[9086, 5409],
+ [256982, 528523]]
+
+Observation:
+Universal traffic features significantly improved cross-domain detection compared to Sentinel telecom-specific features.
+
+---
 # Planned Experiments
----
-
-## Experiment 4
-Baseline Models on CIC-DDoS2019
-
-Objective:
-Measure dataset learnability and compare with Sentinel models.
-
----
 
 ## Experiment 5
 Improved Sentinel Architecture
